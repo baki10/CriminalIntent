@@ -4,6 +4,7 @@ package com.bakigoal.criminalintent;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 public class CrimeListFragment extends ListFragment {
 
+  private static final String TAG = "CrimeListFragment";
   private List<Crime> crimes;
 
   public CrimeListFragment() {
@@ -39,4 +41,9 @@ public class CrimeListFragment extends ListFragment {
     setListAdapter(adapter);
   }
 
+  @Override
+  public void onListItemClick(ListView l, View v, int position, long id) {
+    Crime crime = (Crime) getListAdapter().getItem(position);
+    Log.d(TAG, crime.getTitle() + " was clicked");
+  }
 }
