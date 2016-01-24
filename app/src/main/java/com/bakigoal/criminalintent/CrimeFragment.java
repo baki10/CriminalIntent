@@ -23,7 +23,7 @@ import java.util.Locale;
  */
 public class CrimeFragment extends Fragment {
 
-  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+  public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
   private Crime crime;
   private EditText titleField;
