@@ -14,16 +14,19 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.bakigoal.criminalintent.model.Crime;
+import com.bakigoal.criminalintent.model.CrimeLab;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CrimeFragment extends Fragment {
 
-  public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+  public static final String EXTRA_CRIME_ID = "com.bakigoal.criminalintent.crime_id_key";
+  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy 'Time:'hh:mm:ss", Locale.US);
 
   private Crime crime;
   private EditText titleField;
@@ -34,10 +37,21 @@ public class CrimeFragment extends Fragment {
     // Required empty public constructor
   }
 
+  public static CrimeFragment newInstance(UUID crimeId){
+    Bundle args = new Bundle();
+    args.putSerializable(EXTRA_CRIME_ID, crimeId);
+
+    CrimeFragment crimeFragment = new CrimeFragment();
+    crimeFragment.setArguments(args);
+
+    return crimeFragment;
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    crime = new Crime();
+    UUID crimeId = (UUID) getArguments().getSerializable(EXTRA_CRIME_ID);
+    crime = CrimeLab.getInstance(getActivity()).getCrime(crimeId);
   }
 
   @Override
@@ -46,6 +60,7 @@ public class CrimeFragment extends Fragment {
     View view = inflater.inflate(R.layout.fragment_crime, container, false);
 
     titleField = (EditText) view.findViewById(R.id.crime_title);
+    titleField.setText(crime.getTitle());
     titleField.addTextChangedListener(new TextWatcher() {
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -68,6 +83,7 @@ public class CrimeFragment extends Fragment {
     dateButton.setEnabled(false);
 
     solvedCheckBox = (CheckBox) view.findViewById(R.id.crime_solved);
+    solvedCheckBox.setChecked(crime.isSolved());
     solvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

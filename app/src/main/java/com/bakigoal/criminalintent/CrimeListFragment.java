@@ -2,6 +2,7 @@ package com.bakigoal.criminalintent;
 
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,7 +25,7 @@ import java.util.Locale;
  */
 public class CrimeListFragment extends ListFragment {
 
-  public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy 'Time:'hh:mm:ss", Locale.US);
+  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy 'Time:'hh:mm:ss", Locale.US);
   private static final String TAG = "CrimeListFragment";
   private List<Crime> crimes;
 
@@ -46,6 +47,17 @@ public class CrimeListFragment extends ListFragment {
   public void onListItemClick(ListView l, View v, int position, long id) {
     Crime crime = ((CrimeAdapter) getListAdapter()).getItem(position);
     Log.d(TAG, crime.getTitle() + " was clicked");
+
+    Intent intent = new Intent(getActivity(), CrimeActivity.class);
+    intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, crime.getId());
+    startActivity(intent);
+  }
+
+  //  onResume() is the safest place to take action to update a fragment’s view
+  @Override
+  public void onResume() {
+    super.onResume();
+    ((CrimeAdapter) getListAdapter()).notifyDataSetChanged();
   }
 
   private class CrimeAdapter extends ArrayAdapter<Crime> {
