@@ -1,10 +1,9 @@
 package com.bakigoal.criminalintent;
 
-
-import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,7 @@ public class CrimeListFragment extends ListFragment {
     Crime crime = ((CrimeAdapter) getListAdapter()).getItem(position);
     Log.d(TAG, crime.getTitle() + " was clicked");
 
-    Intent intent = new Intent(getActivity(), CrimeActivity.class);
+    Intent intent = new Intent(getActivity(), CrimePagerActivity.class);
     intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, crime.getId());
     startActivity(intent);
   }

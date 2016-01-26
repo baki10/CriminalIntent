@@ -1,6 +1,6 @@
 package com.bakigoal.criminalintent;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 /**
  * Created by ilmir on 23.01.16.
