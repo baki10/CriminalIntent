@@ -109,14 +109,14 @@ public class CrimeFragment extends Fragment {
 
   private void showAlertDialog() {
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setTitle("Update date?");
-    builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+    builder.setTitle("Update date or time?");
+    builder.setPositiveButton(R.string.date_name, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int id) {
         startDateDialog();
         dialog.dismiss();
       }
     });
-    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+    builder.setNegativeButton(R.string.time_name, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int id) {
         startTimeDialog();
         dialog.dismiss();
