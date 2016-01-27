@@ -1,10 +1,12 @@
 package com.bakigoal.criminalintent;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -29,9 +31,10 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
 
   public static final String EXTRA_CRIME_ID = "com.bakigoal.criminalintent.crime_id_key";
-  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy 'Time:'hh:mm", Locale.US);
   private static final String DIALOG_DATE = "date";
   private static final int REQUEST_DATE = 0;
+  private static final int REQUEST_TIME = 1;
 
   private Crime crime;
   private EditText titleField;
@@ -88,10 +91,7 @@ public class CrimeFragment extends Fragment {
     dateButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        DatePickerFragment dialog = DatePickerFragment.newInstance(crime.getDate());
-        dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-        dialog.show(fragmentManager, DIALOG_DATE);
+        showAlertDialog();
       }
     });
 
@@ -107,6 +107,39 @@ public class CrimeFragment extends Fragment {
     return view;
   }
 
+  private void showAlertDialog() {
+    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setTitle("Update date?");
+    builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int id) {
+        startDateDialog();
+        dialog.dismiss();
+      }
+    });
+    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int id) {
+        startTimeDialog();
+        dialog.dismiss();
+      }
+    });
+    AlertDialog dialog = builder.create();
+    dialog.show();
+  }
+
+  private void startDateDialog() {
+    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+    DatePickerFragment dialog = DatePickerFragment.newInstance(crime.getDate());
+    dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+    dialog.show(fragmentManager, DIALOG_DATE);
+  }
+
+  private void startTimeDialog() {
+    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+    TimePickerFragment dialog = TimePickerFragment.newInstance(crime.getDate());
+    dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
+    dialog.show(fragmentManager, DIALOG_DATE);
+  }
+
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode != Activity.RESULT_OK) {
@@ -114,6 +147,11 @@ public class CrimeFragment extends Fragment {
     }
     if (requestCode == REQUEST_DATE) {
       Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+      crime.setDate(date);
+      updateDate();
+    }
+    if (requestCode == REQUEST_TIME) {
+      Date date = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
       crime.setDate(date);
       updateDate();
     }
