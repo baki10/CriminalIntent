@@ -24,7 +24,7 @@ import java.util.Locale;
  */
 public class CrimeListFragment extends ListFragment {
 
-  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy 'Time:'hh:mm:ss", Locale.US);
+  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
   private static final String TAG = "CrimeListFragment";
   private List<Crime> crimes;
 
