@@ -111,15 +111,15 @@ public class CrimeFragment extends Fragment {
   private void showAlertDialog() {
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
     builder.setTitle(R.string.date_or_time);
-    builder.setPositiveButton(R.string.date_name, new DialogInterface.OnClickListener() {
+    builder.setPositiveButton(R.string.time_name, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int id) {
-        startDateDialog();
+        startTimeDialog();
         dialog.dismiss();
       }
     });
-    builder.setNegativeButton(R.string.time_name, new DialogInterface.OnClickListener() {
+    builder.setNegativeButton(R.string.date_name, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int id) {
-        startTimeDialog();
+        startDateDialog();
         dialog.dismiss();
       }
     });
