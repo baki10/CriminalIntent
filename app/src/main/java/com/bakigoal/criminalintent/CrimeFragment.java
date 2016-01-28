@@ -31,8 +31,9 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
 
   public static final String EXTRA_CRIME_ID = "com.bakigoal.criminalintent.crime_id_key";
-  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy 'Time:'hh:mm", Locale.US);
+  private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy 'Time:'HH:mm", Locale.UK);
   private static final String DIALOG_DATE = "date";
+  private static final String DIALOG_TIME = "time";
   private static final int REQUEST_DATE = 0;
   private static final int REQUEST_TIME = 1;
 
@@ -109,7 +110,7 @@ public class CrimeFragment extends Fragment {
 
   private void showAlertDialog() {
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setTitle("Update date or time?");
+    builder.setTitle(R.string.date_or_time);
     builder.setPositiveButton(R.string.date_name, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int id) {
         startDateDialog();
@@ -137,7 +138,7 @@ public class CrimeFragment extends Fragment {
     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
     TimePickerFragment dialog = TimePickerFragment.newInstance(crime.getDate());
     dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
-    dialog.show(fragmentManager, DIALOG_DATE);
+    dialog.show(fragmentManager, DIALOG_TIME);
   }
 
   @Override

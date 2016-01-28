@@ -54,7 +54,7 @@ public class TimePickerFragment extends DialogFragment {
       public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.set(Calendar.HOUR, hourOfDay);
+        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
         cal.set(Calendar.MINUTE, minute);
         date = cal.getTime();
         //Update argument to preserve selected value on rotation
