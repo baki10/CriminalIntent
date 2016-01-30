@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -155,6 +156,8 @@ public class CrimeFragment extends Fragment {
       }
     });
 
+    registerForContextMenu(photoView);
+
     return view;
   }
 
@@ -213,8 +216,7 @@ public class CrimeFragment extends Fragment {
           Log.i(TAG, "filename: " + filename);
           Photo oldPhoto = crime.getPhoto();
           if (oldPhoto != null) {
-            String path = getActivity().getFileStreamPath(oldPhoto.getFilename()).getAbsolutePath();
-            FileUtils.deleteFile(path);
+            deletePhotoFromDisk(oldPhoto);
           }
           Photo newPhoto = new Photo(filename);
           crime.setPhoto(newPhoto);
@@ -224,6 +226,11 @@ public class CrimeFragment extends Fragment {
       default:
         break;
     }
+  }
+
+  private void deletePhotoFromDisk(Photo oldPhoto) {
+    String path = getActivity().getFileStreamPath(oldPhoto.getFilename()).getAbsolutePath();
+    FileUtils.deleteFile(path);
   }
 
   @Override
@@ -277,5 +284,27 @@ public class CrimeFragment extends Fragment {
   public void onStop() {
     super.onStop();
     PictureUtils.cleanImageView(photoView);
+  }
+
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    getActivity().getMenuInflater().inflate(R.menu.crime_item_context, menu);
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.photo_delete_crime:
+        Photo photo = crime.getPhoto();
+        if (photo != null) {
+          Log.d(TAG, "deleted " + photo);
+          deletePhotoFromDisk(photo);
+          crime.setPhoto(null);
+          PictureUtils.cleanImageView(photoView);
+          return true;
+        }
+    }
+
+    return super.onContextItemSelected(item);
   }
 }
