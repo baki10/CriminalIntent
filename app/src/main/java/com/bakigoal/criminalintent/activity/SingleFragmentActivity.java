@@ -1,10 +1,12 @@
-package com.bakigoal.criminalintent;
+package com.bakigoal.criminalintent.activity;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.bakigoal.criminalintent.R;
 
 /**
  * A simple {@link Fragment} subclass.

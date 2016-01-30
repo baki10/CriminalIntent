@@ -1,4 +1,4 @@
-package com.bakigoal.criminalintent;
+package com.bakigoal.criminalintent.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.bakigoal.criminalintent.R;
+import com.bakigoal.criminalintent.fragment.CrimeFragment;
 import com.bakigoal.criminalintent.model.Crime;
 import com.bakigoal.criminalintent.model.CrimeLab;
 

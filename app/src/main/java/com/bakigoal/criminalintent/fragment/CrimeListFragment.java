@@ -1,4 +1,4 @@
-package com.bakigoal.criminalintent;
+package com.bakigoal.criminalintent.fragment;
 
 import android.content.Intent;
 import android.os.Build;
@@ -8,7 +8,6 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,10 +18,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bakigoal.criminalintent.activity.CrimePagerActivity;
+import com.bakigoal.criminalintent.R;
 import com.bakigoal.criminalintent.model.Crime;
 import com.bakigoal.criminalintent.model.CrimeLab;
 

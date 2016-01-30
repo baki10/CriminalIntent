@@ -1,4 +1,4 @@
-package com.bakigoal.criminalintent;
+package com.bakigoal.criminalintent.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,9 +11,10 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.DatePicker;
 
+import com.bakigoal.criminalintent.R;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by ilmir on 27.01.16.

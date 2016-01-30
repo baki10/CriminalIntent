@@ -1,4 +1,4 @@
-package com.bakigoal.criminalintent;
+package com.bakigoal.criminalintent.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.TimePicker;
+
+import com.bakigoal.criminalintent.R;
 
 import java.util.Calendar;
 import java.util.Date;
