@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
+import android.os.Environment;
 import android.view.Display;
 import android.widget.ImageView;
 
-import com.bakigoal.criminalintent.model.Photo;
-
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ilmir on 30.01.16.
@@ -53,7 +54,24 @@ public class PictureUtils {
       return;
     // Clean up the view's image for the sake of memory
     BitmapDrawable b = (BitmapDrawable) imageView.getDrawable();
+    if (b.getBitmap() == null) {
+      return;
+    }
     b.getBitmap().recycle();
     imageView.setImageDrawable(null);
+  }
+
+  public static File createImageFile() throws IOException {
+    // Create an image file name
+    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+    String imageFileName = "JPEG_" + timeStamp + "_";
+    File storageDir = Environment.getExternalStoragePublicDirectory(
+        Environment.DIRECTORY_PICTURES);
+    File image = File.createTempFile(
+        imageFileName,  /* prefix */
+        ".jpg",         /* suffix */
+        storageDir      /* directory */
+    );
+    return image;
   }
 }
