@@ -1,6 +1,7 @@
 package com.bakigoal.criminalintent.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -68,6 +69,24 @@ public class CrimeFragment extends Fragment {
   private Button suspectButton;
   private Button suspectCallButton;
 
+  private Callbacks callbacks;
+
+  public interface Callbacks {
+    void onCrimeUpdated(Crime crime);
+  }
+
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    callbacks = (Callbacks) context;
+  }
+
+  @Override
+  public void onDetach() {
+    super.onDetach();
+    callbacks = null;
+  }
+
   public CrimeFragment() {
     // Required empty public constructor
   }
@@ -106,6 +125,8 @@ public class CrimeFragment extends Fragment {
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) {
         crime.setTitle(s.toString());
+        callbacks.onCrimeUpdated(crime);
+        getActivity().setTitle(crime.getTitle());
       }
 
       @Override
@@ -129,6 +150,7 @@ public class CrimeFragment extends Fragment {
       @Override
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         crime.setSolved(isChecked);
+        callbacks.onCrimeUpdated(crime);
       }
     });
 
@@ -248,11 +270,13 @@ public class CrimeFragment extends Fragment {
       case REQUEST_DATE:
         Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
         crime.setDate(date);
+        callbacks.onCrimeUpdated(crime);
         updateDate();
         break;
       case REQUEST_TIME:
         date = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
         crime.setDate(date);
+        callbacks.onCrimeUpdated(crime);
         updateDate();
         break;
       case REQUEST_PHOTO:
@@ -265,6 +289,7 @@ public class CrimeFragment extends Fragment {
           }
           Photo newPhoto = new Photo(filename);
           crime.setPhoto(newPhoto);
+          callbacks.onCrimeUpdated(crime);
           showPhoto();
         }
         break;
@@ -293,6 +318,7 @@ public class CrimeFragment extends Fragment {
         }
         crime.setSuspect(suspect);
         crime.setSuspectPhone("tel:" + phoneNumber);
+        callbacks.onCrimeUpdated(crime);
         suspectButton.setText(suspect);
         query.close();
         break;

@@ -1,5 +1,7 @@
 package com.bakigoal.criminalintent.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +40,30 @@ public class CrimeListFragment extends ListFragment {
   private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy 'Time:'HH:mm", Locale.US);
   private static final String TAG = "CrimeListFragment";
   private List<Crime> crimes;
+  private Callbacks callbacks;
+
+  /**
+   * Required interface for hosting activities.
+   */
+  public interface Callbacks{
+    void onCrimeSelected(Crime crime);
+  }
+
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    callbacks = (Callbacks) context;
+  }
+
+  @Override
+  public void onDetach() {
+    super.onDetach();
+    callbacks = null;
+  }
+
+  public void updateUI(){
+    ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
+  }
 
   public CrimeListFragment() {
     // Required empty public constructor
@@ -132,9 +158,10 @@ public class CrimeListFragment extends ListFragment {
     Crime crime = ((CrimeAdapter) getListAdapter()).getItem(position);
     Log.d(TAG, crime.getTitle() + " was clicked");
 
-    Intent intent = new Intent(getActivity(), CrimePagerActivity.class);
-    intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, crime.getId());
-    startActivity(intent);
+//    Intent intent = new Intent(getActivity(), CrimePagerActivity.class);
+//    intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, crime.getId());
+//    startActivity(intent);
+    callbacks.onCrimeSelected(crime);
   }
 
   //  onResume() is the safest place to take action to update a fragment’s view

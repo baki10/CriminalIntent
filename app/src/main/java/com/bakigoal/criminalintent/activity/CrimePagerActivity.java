@@ -15,7 +15,8 @@ import com.bakigoal.criminalintent.model.CrimeLab;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity
+    implements CrimeFragment.Callbacks {
 
   private ViewPager viewPager;
   private List<Crime> crimes;
@@ -69,5 +70,10 @@ public class CrimePagerActivity extends AppCompatActivity {
 
       }
     });
+  }
+
+  @Override
+  public void onCrimeUpdated(Crime crime) {
+
   }
 }
